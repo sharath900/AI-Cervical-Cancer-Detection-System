@@ -21,15 +21,13 @@ from .forms import ContactForm
 
 
 # =========================================================================
-# MODEL SETUP
+# MODEL PATH
 # =========================================================================
 MODEL_PATH = os.path.join(
     settings.BASE_DIR,
     'ml_model',
     'sipakmed_cervical_cancer_model.keras'
 )
-
-model = load_model(MODEL_PATH, compile=False)
 
 
 # =========================================================================
@@ -222,6 +220,9 @@ def predict_view(request):
             img_array = image.img_to_array(img)
 
             img_tensor = tf.expand_dims(img_array, 0)
+
+            # LOAD MODEL ONLY DURING PREDICTION
+            model = load_model(MODEL_PATH, compile=False)
 
             # MODEL PREDICTION
             prediction = model.predict(img_tensor)
