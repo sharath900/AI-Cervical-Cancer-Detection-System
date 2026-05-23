@@ -1,0 +1,51 @@
+{% extends 'upload.html' %}
+
+{% block title %}Contact - CerviDetect{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        
+        <!-- Success Alert Notification popups -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm rounded-3 mb-4" role="alert">
+                    <i class="fa-solid fa-circle-check me-2"></i>{{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="card shadow border-0 p-4 rounded-3 bg-white">
+            <h2 class="fw-bold mb-3 text-center text-dark">Contact Our Team</h2>
+            <p class="text-muted text-center mb-4">Have questions about the project or model accuracy? Drop us a message.</p>
+            
+            <form action="{% url 'contact' %}" method="POST">
+                {% csrf_token %} <!-- Django's security mechanism -->
+                
+                <!-- Name Field -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold text-secondary">Name</label>
+                    <input type="text" name="name" class="form-control shadow-none" placeholder="Your name" required>
+                </div>
+                
+                <!-- Email Field -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold text-secondary">Email address</label>
+                    <input type="email" name="email" class="form-control shadow-none" placeholder="name@example.com" required>
+                </div>
+                
+                <!-- Message Field -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold text-secondary">Message</label>
+                    <textarea name="message" class="form-control shadow-none" rows="4" placeholder="Your query..." required></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-lg fw-bold w-100 shadow-sm rounded-pill mt-2">
+                    <i class="fa-solid fa-paper-plane me-2"></i>Send Message
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

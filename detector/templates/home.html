@@ -1,0 +1,184 @@
+{% extends 'upload.html' %} <!-- Line 1: Must always be the first tag! -->
+{% load static %} <!-- Line 2: Safe to load static assets here -->
+
+{% block title %}Home - CerviDetect{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Prevent image stretching/distortion on variable screens */
+    .object-fit-cover {
+        object-fit: cover;
+    }
+    .style-caption {
+        max-width: 75%;
+        border-bottom: 2px solid #0dcaf0;
+    }
+    .transition-btn {
+        transition: all 0.2s ease-in-out;
+    }
+    .transition-btn:hover {
+        transform: scale(1.03);
+        box-shadow: 0 8px 15px rgba(13, 110, 253, 0.2) !important;
+    }
+    
+    /* Workflow Section Styles */
+    .step-card {
+        border: 1px solid #e9ecef;
+        background: #ffffff;
+        border-radius: 16px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .step-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.04) !important;
+        border-color: #0dcaf0;
+    }
+    .step-badge {
+        width: 35px;
+        height: 35px;
+        background-color: #f1f3f5;
+        color: #495057;
+        font-weight: 700;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .step-card:hover .step-badge {
+        background-color: #0dcaf0;
+        color: #fff;
+    }
+    .step-icon {
+        font-size: 2.2rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Medical Image Carousel Component Section -->
+<div id="cerviDetectCarousel" class="carousel slide shadow rounded-3 overflow-hidden mb-5" data-bs-ride="carousel">
+    
+    <!-- Carousel Bottom Slider Position Navigation Controls -->
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#cerviDetectCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#cerviDetectCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#cerviDetectCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+
+    <!-- Inner Sliders Processing Zone -->
+    <div class="carousel-inner" style="max-height: 460px;">
+        
+        <!-- Slide Item #1 -->
+        <div class="carousel-item active" data-bs-interval="4500">
+            <img src="{% static 'aiimage.1.png' %}" class="d-block w-100 object-fit-cover" alt="Advanced Machine Learning Diagnostic Screening Assistant" style="height: 460px; filter: brightness(65%);">
+            <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded-3 p-3 mx-auto style-caption">
+                <h5 class="fw-bold fs-3 text-info">Computer Vision Screening Analysis</h5>
+                <p class="lead mb-0">Empowering medical processing pipelines with automated computational cell scanning structures.</p>
+            </div>
+        </div>
+
+        <!-- Slide Item #2 -->
+        <div class="carousel-item" data-bs-interval="4500">
+            <img src="{% static 'aiimage.2.png' %}" class="d-block w-100 object-fit-cover" alt="Microscopic Laboratory Deep Tissue Analysis" style="height: 460px; filter: brightness(65%);">
+            <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded-3 p-3 mx-auto style-caption">
+                <h5 class="fw-bold fs-3 text-info">Microscopic Pattern Optimization</h5>
+                <p class="lead mb-0">Identifying visual morphology changes across biological cellular structures at early stages.</p>
+            </div>
+        </div>
+
+        <!-- Slide Item #3 -->
+        <div class="carousel-item" data-bs-interval="4500">
+            <img src="{% static 'aiimage.3.png' %}" class="d-block w-100 object-fit-cover" alt="Clinical Laboratory Hardware Infrastructure" style="height: 460px; filter: brightness(65%);">
+            <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded-3 p-3 mx-auto style-caption">
+                <h5 class="fw-bold fs-3 text-info">Rapid Evaluation Architecture</h5>
+                <p class="lead mb-0">Optimizing inference turn-around metrics to minimize clinical processing congestion parameters.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Left Arrow Navigation Control Button -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#cerviDetectCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    
+    <!-- Right Arrow Navigation Control Button -->
+    <button class="carousel-control-next" type="button" data-bs-target="#cerviDetectCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+<!-- Main Call To Action Landing Banner Component -->
+<div class="p-5 mb-5 bg-white rounded-3 shadow-sm border border-light-subtle">
+    <div class="container-fluid py-3 text-center">
+        <h1 class="display-4 fw-bold text-dark mb-3">Early Detection Saves Lives</h1>
+        <p class="col-md-8 mx-auto fs-5 text-muted mb-4">
+            Welcome to CerviDetect. An AI-powered screening support assistant designed to help process image analysis rapidly and accurately.
+        </p>
+        <a href="{% url 'about' %}" class="btn btn-primary btn-lg fw-bold px-5 py-3 shadow-sm rounded-pill transition-btn">
+            <i class="fa-solid fa-circle-arrow-right me-2"></i>Launch Diagnostic Portal
+        </a>
+    </div>
+</div>
+
+<!-- "How It Works" Step-by-Step Card Section -->
+<section class="container py-4 mb-4">
+    <div class="text-center mb-5">
+        <span class="badge bg-light text-primary border border-primary-subtle px-3 py-2 rounded-pill fw-bold mb-2">WORKFLOW</span>
+        <h2 class="fw-bold text-dark">How To Use the Platform</h2>
+        <p class="text-muted mx-auto" style="max-width: 600px;">Get predictive insights from our deep learning analysis engine in three simple steps.</p>
+    </div>
+
+    <div class="row g-4">
+        <!-- Step 1 Card -->
+        <div class="col-md-4">
+            <div class="card h-100 step-card shadow-sm p-4 border-0">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="step-icon text-primary">
+                        <i class="fa-solid fa-images"></i>
+                    </div>
+                    <div class="step-badge">1</div>
+                </div>
+                <h5 class="fw-bold text-dark mb-2">Prepare Sample Image</h5>
+                <p class="text-muted small mb-0">
+                    Acquire a clear digital Pap smear slice image or relevant histopathology scan sample. Supported form profiles include standard format files like JPG, PNG, or TIFF.
+                </p>
+            </div>
+        </div>
+
+        <!-- Step 2 Card -->
+        <div class="col-md-4">
+            <div class="card h-100 step-card shadow-sm p-4 border-0">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="step-icon text-info">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                    </div>
+                    <div class="step-badge">2</div>
+                </div>
+                <h5 class="fw-bold text-dark mb-2">Upload to Portal</h5>
+                <p class="text-muted small mb-0">
+                    Navigate to our <strong>About &amp; Detection</strong> tab. Drag your target medical image directly into the dynamic upload card container zone and click compile.
+                </p>
+            </div>
+        </div>
+
+        <!-- Step 3 Card -->
+        <div class="col-md-4">
+            <div class="card h-100 step-card shadow-sm p-4 border-0">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="step-icon text-success">
+                        <i class="fa-solid fa-square-poll-vertical"></i>
+                    </div>
+                    <div class="step-badge">3</div>
+                </div>
+                <h5 class="fw-bold text-dark mb-2">Review AI Findings</h5>
+                <p class="text-muted small mb-0">
+                    The backend Django server feeds the matrix to our trained diagnostic classification model network, returning cellular prediction weights instantly.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

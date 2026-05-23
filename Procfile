@@ -1,0 +1,1 @@
+web: gunicorn cervical_cancer_project.wsgi

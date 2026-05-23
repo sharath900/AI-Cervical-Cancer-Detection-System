@@ -1,0 +1,144 @@
+{% extends 'upload.html' %}
+
+{% block title %}About & Detection - CerviDetect{% endblock %}
+
+{% block content %}
+<section class="row justify-content-center mb-5">
+    <div class="col-lg-8 text-center">
+        <span class="badge bg-info text-dark mb-2 px-3 py-2 rounded-pill fw-bold">PROJECT OVERVIEW</span>
+        <h1 class="display-5 fw-bold text-dark mb-3">About CerviDetect</h1>
+        <p class="lead text-muted">
+            Our platform leverages advanced deep learning models to analyze pap smear images or screening data, assisting healthcare professionals in early and accurate cervical cancer detection. Early screening drastically improves survival rates—our goal is to make screening accessible and fast.
+        </p>
+        <hr class="w-25 mx-auto text-primary" style="height: 3px;">
+    </div>
+</section>
+
+{% if error_message %}
+<div class="row justify-content-center mb-4">
+    <div class="col-md-8 col-lg-6">
+        <div class="alert alert-danger alert-dismissible fade show shadow-sm border-0 rounded-3" role="alert">
+            <i class="fa-solid fa-triangle-exclamation me-2"></i><strong>Error:</strong> {{ error_message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<section class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow border-0 p-4 p-md-5 bg-white rounded-3 mb-5">
+            <div class="text-center mb-4">
+                <h2 class="h4 fw-bold">Screening & Analysis Portal</h2>
+                <p class="text-muted small">Upload a medical image (e.g., Pap smear histopathology) to run the detection algorithm.</p>
+            </div>
+
+            <form action="/predict/" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="upload-card p-5 text-center mb-4" style="border: 2px dashed #cbd5e1; border-radius: 12px; background-color: #f8fafc;">
+                    <div class="fs-1 text-primary mb-3">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                    </div>
+                    <h5 class="fw-semibold">Select or drag your image here</h5>
+                    <p class="text-muted small mb-3">Supports JPG, PNG, or TIFF files</p>
+                    
+                    <input type="file" id="imageInput" name="file" class="form-control" required>
+                </div>
+
+                <div id="previewContainer" class="d-none mb-4 animate-fade-in">
+                    <div class="card border border-primary-subtle bg-light-subtle p-3 text-center shadow-sm">
+                        <span class="badge bg-primary text-white mx-auto mb-2 px-3 py-1 rounded-pill small fw-bold">
+                            📂 SELECTED CELL SAMPLE PREVIEW
+                        </span>
+                        <div class="position-relative d-inline-block mx-auto mt-2">
+                            <img id="imagePreview" src="#" alt="Selected sample preview" class="img-fluid rounded border shadow-sm" style="max-height: 220px; object-fit: contain;">
+                        </div>
+                        <p class="text-muted small mb-0 mt-2 font-monospace" id="fileNameLabel"></p>
+                    </div>
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-lg fw-bold shadow-sm">
+                        <i class="fa-solid fa-wand-magic-sparkles me-2"></i>Run Detection Model
+                    </button>
+                </div>
+            </form>
+
+            {% if prediction_result %}
+                <div class="mt-5 pt-4 border-top">
+                    <div class="text-center mb-4">
+                        <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-1 rounded-pill fw-bold mb-2 small">
+                            <i class="fa-solid fa-square-poll-vertical me-1"></i> REPORT GENERATED
+                        </span>
+                        <h4 class="fw-bold text-dark">AI Diagnostic Findings</h4>
+                    </div>
+                    
+                    {% if analyzed_image_url %}
+                        <div class="text-center mb-4">
+                            <p class="small text-muted mb-2">Analyzed Tissue Sample (Saved to Server):</p>
+                            <img src="{{ analyzed_image_url }}" class="img-fluid rounded border shadow-sm mx-auto d-block" style="max-height: 250px; object-fit: contain; border: 2px solid #dee2e6 !important;">
+                        </div>
+                    {% endif %}
+
+                    <div class="p-3 rounded-3 border border-light-subtle bg-light">
+                        <div class="mb-3 text-center">
+                            <p class="mb-1 text-uppercase tracking-wider small text-muted fw-bold" style="font-size: 0.75rem;">SipakMed Cell Category Classification</p>
+                            <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-virus-covid me-2 text-danger"></i>{{ prediction_result }}</h5>
+                        </div>
+                        
+                        <div class="text-center">
+                            <p class="mb-1 text-uppercase tracking-wider small text-muted fw-bold" style="font-size: 0.75rem;">Model Calculation Certainty</p>
+                            <span class="badge bg-primary fs-6 px-4 py-2 rounded-pill shadow-sm fw-bold">
+                                {{ confidence }}
+                            </span>
+                        </div>
+                    </div>
+
+                    {% if debug_probabilities %}
+                        <div class="mt-4 p-3 bg-dark rounded text-start font-monospace text-warning shadow-sm" style="font-size: 0.78rem; border-left: 4px solid #eab308;">
+                            <div class="fw-bold text-white mb-1"><i class="fa-solid fa-microchip me-1 text-warning"></i> Raw Layer Probability Array Matrix Output:</div>
+                            <div class="text-warning-subtle">{{ debug_probabilities }}</div>
+                            <div class="text-muted mt-2 small" style="font-size: 0.68rem; line-height: 1.2;">
+                                Order of calculation: [Dyskeratotic, Koilocytotic, Metaplastic, Parabasal, Superficial-Intermediate]
+                            </div>
+                        </div>
+                    {% endif %}
+                    
+                    <div class="mt-4 text-center">
+                        <p class="text-muted mb-0" style="font-size: 0.75rem;">
+                            <i class="fa-solid fa-circle-info me-1"></i> Result derived from custom machine learning feature matrices.
+                        </p>
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+</section>
+
+<script>
+    document.getElementById('imageInput').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            
+            // Fires automatically the instant the file is loaded from your OS explorer
+            reader.onload = function(e) {
+                const previewContainer = document.getElementById('previewContainer');
+                const imagePreview = document.getElementById('imagePreview');
+                const fileNameLabel = document.getElementById('fileNameLabel');
+                
+                // Inject the local data-url source into the image elements
+                imagePreview.src = e.target.result;
+                fileNameLabel.innerHTML = `<i class="fa-solid fa-file-image me-1"></i> Ready to scan: ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+                
+                // Remove the 'd-none' class to make the card visible instantly!
+                previewContainer.classList.remove('d-none');
+            }
+            
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+{% endblock %}
