@@ -1,76 +1,239 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Cervical Cancer Detection</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
-        body{
-            font-family: Arial;
-            background:#f4f4f4;
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins', sans-serif;
         }
 
+        body{
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background:linear-gradient(135deg,#0f172a,#1e293b,#334155);
+            overflow:hidden;
+        }
+
+        /* Background circles */
+
+        .circle{
+            position:absolute;
+            border-radius:50%;
+            background:rgba(255,255,255,0.08);
+            backdrop-filter:blur(5px);
+        }
+
+        .circle1{
+            width:250px;
+            height:250px;
+            top:-80px;
+            left:-80px;
+        }
+
+        .circle2{
+            width:300px;
+            height:300px;
+            bottom:-100px;
+            right:-100px;
+        }
+
+        /* Login Card */
+
         .container{
-            width:350px;
-            margin:100px auto;
-            background:white;
-            padding:30px;
-            border-radius:10px;
-            box-shadow:0px 0px 10px gray;
+            width:400px;
+            padding:40px;
+            background:rgba(255,255,255,0.08);
+            border:1px solid rgba(255,255,255,0.15);
+            backdrop-filter:blur(15px);
+            border-radius:20px;
+            box-shadow:0 8px 32px rgba(0,0,0,0.3);
+            color:white;
+            position:relative;
+            z-index:10;
+            animation:fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn{
+            from{
+                opacity:0;
+                transform:translateY(30px);
+            }
+            to{
+                opacity:1;
+                transform:translateY(0);
+            }
+        }
+
+        .logo{
+            text-align:center;
+            margin-bottom:20px;
+        }
+
+        .logo i{
+            font-size:50px;
+            color:#38bdf8;
         }
 
         h2{
             text-align:center;
+            margin-bottom:10px;
+            font-size:30px;
+            font-weight:600;
         }
 
-        input{
+        .subtitle{
+            text-align:center;
+            color:#cbd5e1;
+            margin-bottom:30px;
+            font-size:14px;
+        }
+
+        .input-group{
+            position:relative;
+            margin-bottom:20px;
+        }
+
+        .input-group i{
+            position:absolute;
+            top:50%;
+            left:15px;
+            transform:translateY(-50%);
+            color:#94a3b8;
+        }
+
+        .input-group input{
             width:100%;
-            padding:10px;
-            margin-top:10px;
+            padding:14px 14px 14px 45px;
+            border:none;
+            outline:none;
+            border-radius:12px;
+            background:rgba(255,255,255,0.12);
+            color:white;
+            font-size:15px;
+            transition:0.3s;
+        }
+
+        .input-group input::placeholder{
+            color:#cbd5e1;
+        }
+
+        .input-group input:focus{
+            background:rgba(255,255,255,0.18);
+            border:1px solid #38bdf8;
+            box-shadow:0 0 10px rgba(56,189,248,0.4);
         }
 
         button{
             width:100%;
-            padding:10px;
-            margin-top:15px;
-            background:#007bff;
-            color:white;
+            padding:14px;
             border:none;
+            border-radius:12px;
+            background:linear-gradient(135deg,#0ea5e9,#2563eb);
+            color:white;
+            font-size:16px;
+            font-weight:600;
             cursor:pointer;
+            transition:0.3s;
         }
 
-        p{
+        button:hover{
+            transform:translateY(-2px);
+            box-shadow:0 8px 20px rgba(37,99,235,0.4);
+        }
+
+        .footer-text{
             text-align:center;
-            margin-top:15px;
+            margin-top:25px;
+            font-size:14px;
+            color:#cbd5e1;
         }
 
-        a{
+        .footer-text a{
+            color:#38bdf8;
             text-decoration:none;
-            color:blue;
+            font-weight:500;
         }
+
+        .footer-text a:hover{
+            text-decoration:underline;
+        }
+
+        @media(max-width:450px){
+
+            .container{
+                width:90%;
+                padding:30px;
+            }
+
+            h2{
+                font-size:24px;
+            }
+
+        }
+
     </style>
 </head>
+
 <body>
 
-<div class="container">
+    <!-- Background Effects -->
+    <div class="circle circle1"></div>
+    <div class="circle circle2"></div>
 
-    <h2>Login</h2>
+    <!-- Login Card -->
+    <div class="container">
 
-    <form method="POST">
-        {% csrf_token %}
+        <div class="logo">
+            <i class="fa-solid fa-shield-heart"></i>
+        </div>
 
-        <input type="text" name="username" placeholder="Enter Username" required>
+        <h2>Welcome Back</h2>
 
-        <input type="password" name="password" placeholder="Enter Password" required>
+        <p class="subtitle">
+            Login to access your AI Detection Dashboard
+        </p>
 
-        <button type="submit">Login</button>
-    </form>
+        <form method="POST">
+            {% csrf_token %}
 
-    <p>
-        Don't have an account?
-        <a href="{% url 'register' %}">Register</a>
-    </p>
+            <div class="input-group">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" name="username" placeholder="Enter Username" required>
+            </div>
 
-</div>
+            <div class="input-group">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" name="password" placeholder="Enter Password" required>
+            </div>
+
+            <button type="submit">
+                <i class="fa-solid fa-right-to-bracket"></i>
+                Login
+            </button>
+
+        </form>
+
+        <p class="footer-text">
+            Don’t have an account?
+            <a href="{% url 'register' %}">Register</a>
+        </p>
+
+    </div>
 
 </body>
 </html>

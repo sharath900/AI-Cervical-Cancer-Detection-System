@@ -1,144 +1,482 @@
 {% extends 'upload.html' %}
 
-{% block title %}About & Detection - CerviDetect{% endblock %}
+{% block title %}AI Detection System - CerviDetect{% endblock %}
 
 {% block content %}
-<section class="row justify-content-center mb-5">
-    <div class="col-lg-8 text-center">
-        <span class="badge bg-info text-dark mb-2 px-3 py-2 rounded-pill fw-bold">PROJECT OVERVIEW</span>
-        <h1 class="display-5 fw-bold text-dark mb-3">About CerviDetect</h1>
-        <p class="lead text-muted">
-            Our platform leverages advanced deep learning models to analyze pap smear images or screening data, assisting healthcare professionals in early and accurate cervical cancer detection. Early screening drastically improves survival rates—our goal is to make screening accessible and fast.
+
+<style>
+
+    body{
+        background:#f1f5f9;
+    }
+
+    .hero-section{
+        background:linear-gradient(135deg,#0f172a,#1e293b,#334155);
+        border-radius:25px;
+        padding:60px 40px;
+        color:white;
+        position:relative;
+        overflow:hidden;
+        box-shadow:0 10px 30px rgba(0,0,0,0.15);
+    }
+
+    .hero-section::before{
+        content:'';
+        position:absolute;
+        width:300px;
+        height:300px;
+        background:rgba(255,255,255,0.05);
+        border-radius:50%;
+        top:-120px;
+        right:-120px;
+    }
+
+    .hero-section::after{
+        content:'';
+        position:absolute;
+        width:250px;
+        height:250px;
+        background:rgba(255,255,255,0.05);
+        border-radius:50%;
+        bottom:-120px;
+        left:-120px;
+    }
+
+    .feature-card{
+        border:none;
+        border-radius:18px;
+        transition:0.3s;
+        background:white;
+        box-shadow:0 5px 20px rgba(0,0,0,0.08);
+    }
+
+    .feature-card:hover{
+        transform:translateY(-5px);
+    }
+
+    .upload-card{
+        border:2px dashed #94a3b8;
+        border-radius:18px;
+        background:#f8fafc;
+        transition:0.3s;
+    }
+
+    .upload-card:hover{
+        border-color:#2563eb;
+        background:#eff6ff;
+    }
+
+    .result-card{
+        border-radius:18px;
+        background:white;
+        box-shadow:0 5px 20px rgba(0,0,0,0.08);
+    }
+
+    .tech-badge{
+        background:#dbeafe;
+        color:#1d4ed8;
+        padding:10px 16px;
+        border-radius:30px;
+        font-weight:600;
+        display:inline-block;
+        margin:5px;
+        font-size:14px;
+    }
+
+    .section-title{
+        font-weight:700;
+        color:#0f172a;
+    }
+
+    .info-box{
+        background:white;
+        border-radius:18px;
+        padding:25px;
+        box-shadow:0 5px 20px rgba(0,0,0,0.08);
+    }
+
+    .step-box{
+        background:#ffffff;
+        border-radius:15px;
+        padding:20px;
+        transition:0.3s;
+        box-shadow:0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    .step-box:hover{
+        transform:translateY(-5px);
+    }
+
+    .preview-card{
+        background:#ffffff;
+        border-radius:20px;
+        box-shadow:0 5px 20px rgba(0,0,0,0.08);
+        padding:20px;
+    }
+
+</style>
+
+<!-- HERO SECTION -->
+
+<section class="container mt-4 mb-5">
+
+    <div class="hero-section text-center">
+
+        <span class="badge bg-info text-dark px-4 py-2 rounded-pill mb-3 fw-bold">
+            AI POWERED MEDICAL ANALYSIS
+        </span>
+
+        <h1 class="display-4 fw-bold mb-3">
+            CerviDetect
+        </h1>
+
+        <p class="lead text-light mb-4">
+            Deep Learning based Cervical Cancer Cell Detection System using CNN, TensorFlow, and Keras for intelligent medical image analysis.
         </p>
-        <hr class="w-25 mx-auto text-primary" style="height: 3px;">
+
+        <div class="d-flex justify-content-center flex-wrap">
+
+            <span class="tech-badge">CNN</span>
+            <span class="tech-badge">TensorFlow</span>
+            <span class="tech-badge">Keras</span>
+            <span class="tech-badge">Deep Learning</span>
+            <span class="tech-badge">Computer Vision</span>
+
+        </div>
+
     </div>
+
 </section>
 
-{% if error_message %}
-<div class="row justify-content-center mb-4">
-    <div class="col-md-8 col-lg-6">
-        <div class="alert alert-danger alert-dismissible fade show shadow-sm border-0 rounded-3" role="alert">
-            <i class="fa-solid fa-triangle-exclamation me-2"></i><strong>Error:</strong> {{ error_message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    </div>
-</div>
-{% endif %}
+<!-- ABOUT SECTION -->
 
-<section class="row justify-content-center">
-    <div class="col-md-8 col-lg-6">
-        <div class="card shadow border-0 p-4 p-md-5 bg-white rounded-3 mb-5">
-            <div class="text-center mb-4">
-                <h2 class="h4 fw-bold">Screening & Analysis Portal</h2>
-                <p class="text-muted small">Upload a medical image (e.g., Pap smear histopathology) to run the detection algorithm.</p>
+<section class="container mb-5">
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+            <div class="feature-card p-4 h-100 text-center">
+
+                <div class="fs-1 text-primary mb-3">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+
+                <h4 class="fw-bold">AI Detection</h4>
+
+                <p class="text-muted">
+                    Uses Convolutional Neural Networks (CNN) to identify abnormal cervical cancer cells from medical images.
+                </p>
+
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="feature-card p-4 h-100 text-center">
+
+                <div class="fs-1 text-success mb-3">
+                    <i class="fa-solid fa-microscope"></i>
+                </div>
+
+                <h4 class="fw-bold">Medical Imaging</h4>
+
+                <p class="text-muted">
+                    Processes pap smear and histopathology image samples for advanced cell classification and analysis.
+                </p>
+
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="feature-card p-4 h-100 text-center">
+
+                <div class="fs-1 text-danger mb-3">
+                    <i class="fa-solid fa-shield-heart"></i>
+                </div>
+
+                <h4 class="fw-bold">Early Detection</h4>
+
+                <p class="text-muted">
+                    Helps support early diagnosis by assisting healthcare professionals with AI-assisted predictions.
+                </p>
+
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- HOW TO USE -->
+
+<section class="container mb-5">
+
+    <div class="info-box">
+
+        <h2 class="section-title mb-4 text-center">
+            How to Use the System
+        </h2>
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+                <div class="step-box text-center">
+
+                    <div class="fs-1 text-primary mb-3">
+                        <i class="fa-solid fa-upload"></i>
+                    </div>
+
+                    <h5 class="fw-bold">1. Upload Image</h5>
+
+                    <p class="text-muted">
+                        Upload a cervical cell image in JPG or PNG format for AI analysis.
+                    </p>
+
+                </div>
             </div>
 
-            <form action="/predict/" method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                
-                <div class="upload-card p-5 text-center mb-4" style="border: 2px dashed #cbd5e1; border-radius: 12px; background-color: #f8fafc;">
-                    <div class="fs-1 text-primary mb-3">
-                        <i class="fa-solid fa-cloud-arrow-up"></i>
+            <div class="col-md-4">
+                <div class="step-box text-center">
+
+                    <div class="fs-1 text-success mb-3">
+                        <i class="fa-solid fa-gears"></i>
                     </div>
-                    <h5 class="fw-semibold">Select or drag your image here</h5>
-                    <p class="text-muted small mb-3">Supports JPG, PNG, or TIFF files</p>
-                    
-                    <input type="file" id="imageInput" name="file" class="form-control" required>
+
+                    <h5 class="fw-bold">2. AI Processing</h5>
+
+                    <p class="text-muted">
+                        The CNN model processes the image using TensorFlow deep learning algorithms.
+                    </p>
+
                 </div>
+            </div>
 
-                <div id="previewContainer" class="d-none mb-4 animate-fade-in">
-                    <div class="card border border-primary-subtle bg-light-subtle p-3 text-center shadow-sm">
-                        <span class="badge bg-primary text-white mx-auto mb-2 px-3 py-1 rounded-pill small fw-bold">
-                            📂 SELECTED CELL SAMPLE PREVIEW
-                        </span>
-                        <div class="position-relative d-inline-block mx-auto mt-2">
-                            <img id="imagePreview" src="#" alt="Selected sample preview" class="img-fluid rounded border shadow-sm" style="max-height: 220px; object-fit: contain;">
-                        </div>
-                        <p class="text-muted small mb-0 mt-2 font-monospace" id="fileNameLabel"></p>
+            <div class="col-md-4">
+                <div class="step-box text-center">
+
+                    <div class="fs-1 text-danger mb-3">
+                        <i class="fa-solid fa-file-waveform"></i>
                     </div>
+
+                    <h5 class="fw-bold">3. Get Results</h5>
+
+                    <p class="text-muted">
+                        View prediction category, confidence score, and diagnostic findings instantly.
+                    </p>
+
                 </div>
-
-                <div class="d-grid">
-                    <button type="submit" class="btn btn-primary btn-lg fw-bold shadow-sm">
-                        <i class="fa-solid fa-wand-magic-sparkles me-2"></i>Run Detection Model
-                    </button>
-                </div>
-            </form>
-
-            {% if prediction_result %}
-                <div class="mt-5 pt-4 border-top">
-                    <div class="text-center mb-4">
-                        <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-1 rounded-pill fw-bold mb-2 small">
-                            <i class="fa-solid fa-square-poll-vertical me-1"></i> REPORT GENERATED
-                        </span>
-                        <h4 class="fw-bold text-dark">AI Diagnostic Findings</h4>
-                    </div>
-                    
-                    {% if analyzed_image_url %}
-                        <div class="text-center mb-4">
-                            <p class="small text-muted mb-2">Analyzed Tissue Sample (Saved to Server):</p>
-                            <img src="{{ analyzed_image_url }}" class="img-fluid rounded border shadow-sm mx-auto d-block" style="max-height: 250px; object-fit: contain; border: 2px solid #dee2e6 !important;">
-                        </div>
-                    {% endif %}
-
-                    <div class="p-3 rounded-3 border border-light-subtle bg-light">
-                        <div class="mb-3 text-center">
-                            <p class="mb-1 text-uppercase tracking-wider small text-muted fw-bold" style="font-size: 0.75rem;">SipakMed Cell Category Classification</p>
-                            <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-virus-covid me-2 text-danger"></i>{{ prediction_result }}</h5>
-                        </div>
-                        
-                        <div class="text-center">
-                            <p class="mb-1 text-uppercase tracking-wider small text-muted fw-bold" style="font-size: 0.75rem;">Model Calculation Certainty</p>
-                            <span class="badge bg-primary fs-6 px-4 py-2 rounded-pill shadow-sm fw-bold">
-                                {{ confidence }}
-                            </span>
-                        </div>
-                    </div>
-
-                    {% if debug_probabilities %}
-                        <div class="mt-4 p-3 bg-dark rounded text-start font-monospace text-warning shadow-sm" style="font-size: 0.78rem; border-left: 4px solid #eab308;">
-                            <div class="fw-bold text-white mb-1"><i class="fa-solid fa-microchip me-1 text-warning"></i> Raw Layer Probability Array Matrix Output:</div>
-                            <div class="text-warning-subtle">{{ debug_probabilities }}</div>
-                            <div class="text-muted mt-2 small" style="font-size: 0.68rem; line-height: 1.2;">
-                                Order of calculation: [Dyskeratotic, Koilocytotic, Metaplastic, Parabasal, Superficial-Intermediate]
-                            </div>
-                        </div>
-                    {% endif %}
-                    
-                    <div class="mt-4 text-center">
-                        <p class="text-muted mb-0" style="font-size: 0.75rem;">
-                            <i class="fa-solid fa-circle-info me-1"></i> Result derived from custom machine learning feature matrices.
-                        </p>
-                    </div>
-                </div>
-            {% endif %}
+            </div>
 
         </div>
+
     </div>
+
 </section>
 
+<!-- UPLOAD SECTION -->
+
+<section class="container mb-5">
+
+    <div class="card border-0 shadow-lg p-4 p-md-5 rounded-4">
+
+        <div class="text-center mb-4">
+
+            <h2 class="fw-bold">
+                AI Screening Portal
+            </h2>
+
+            <p class="text-muted">
+                Upload a medical image sample to run the deep learning detection model.
+            </p>
+
+        </div>
+
+        <form action="/predict/" method="POST" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            <div class="upload-card p-5 text-center mb-4">
+
+                <div class="fs-1 text-primary mb-3">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                </div>
+
+                <h4 class="fw-bold">
+                    Upload Medical Image
+                </h4>
+
+                <p class="text-muted">
+                    Supported formats: JPG, PNG, TIFF
+                </p>
+
+                <input type="file"
+                       name="file"
+                       id="imageInput"
+                       class="form-control mt-3"
+                       accept="image/*"
+                       required>
+
+            </div>
+
+            <!-- IMAGE PREVIEW -->
+
+            <div id="previewBox"
+                 class="preview-card text-center mb-4"
+                 style="display:none;">
+
+                <h5 class="fw-bold text-primary mb-3">
+                    <i class="fa-solid fa-image me-2"></i>
+                    Uploaded Image Preview
+                </h5>
+
+                <img id="previewImage"
+                     src="#"
+                     alt="Preview Image"
+                     class="img-fluid rounded-4 shadow"
+                     style="max-height:300px; object-fit:contain; border:3px solid #dbeafe;">
+
+                <p id="fileName"
+                   class="text-muted mt-3 fw-semibold">
+                </p>
+
+            </div>
+
+            <div class="d-grid">
+
+                <button type="submit"
+                        class="btn btn-primary btn-lg fw-bold rounded-3">
+
+                    <i class="fa-solid fa-wand-magic-sparkles me-2"></i>
+                    Run AI Detection
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+<!-- RESULT SECTION -->
+
+{% if prediction_result %}
+
+<section class="container mb-5">
+
+    <div class="result-card p-4 p-md-5">
+
+        <div class="text-center mb-4">
+
+            <span class="badge bg-success px-4 py-2 rounded-pill mb-3">
+                AI REPORT GENERATED
+            </span>
+
+            <h2 class="fw-bold">
+                Detection Results
+            </h2>
+
+        </div>
+
+        {% if analyzed_image_url %}
+
+        <div class="text-center mb-4">
+
+            <img src="{{ analyzed_image_url }}"
+                 class="img-fluid rounded shadow"
+                 style="max-height:300px; object-fit:contain;">
+
+        </div>
+
+        {% endif %}
+
+        <div class="row text-center g-4">
+
+            <div class="col-md-6">
+
+                <div class="p-4 bg-light rounded-4">
+
+                    <h6 class="text-muted mb-2">
+                        Predicted Cell Category
+                    </h6>
+
+                    <h4 class="fw-bold text-danger">
+                        {{ prediction_result }}
+                    </h4>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <div class="p-4 bg-light rounded-4">
+
+                    <h6 class="text-muted mb-2">
+                        Confidence Score
+                    </h6>
+
+                    <h4 class="fw-bold text-primary">
+                        {{ confidence }}
+                    </h4>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% if debug_probabilities %}
+
+        <div class="mt-4 p-4 bg-dark text-warning rounded-4">
+
+            <h6 class="fw-bold mb-3">
+                Raw Model Probability Output
+            </h6>
+
+            <p class="mb-0">
+                {{ debug_probabilities }}
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endif %}
+
 <script>
-    document.getElementById('imageInput').addEventListener('change', function(event) {
+
+    const imageInput = document.getElementById('imageInput');
+
+    imageInput.addEventListener('change', function(event){
+
         const file = event.target.files[0];
-        if (file) {
+
+        if(file){
+
             const reader = new FileReader();
-            
-            // Fires automatically the instant the file is loaded from your OS explorer
-            reader.onload = function(e) {
-                const previewContainer = document.getElementById('previewContainer');
-                const imagePreview = document.getElementById('imagePreview');
-                const fileNameLabel = document.getElementById('fileNameLabel');
-                
-                // Inject the local data-url source into the image elements
-                imagePreview.src = e.target.result;
-                fileNameLabel.innerHTML = `<i class="fa-solid fa-file-image me-1"></i> Ready to scan: ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
-                
-                // Remove the 'd-none' class to make the card visible instantly!
-                previewContainer.classList.remove('d-none');
+
+            reader.onload = function(e){
+
+                document.getElementById('previewImage').src = e.target.result;
+
+                document.getElementById('previewBox').style.display = 'block';
+
+                document.getElementById('fileName').innerHTML =
+                    "Selected File: " + file.name;
+
             }
-            
+
             reader.readAsDataURL(file);
+
         }
+
     });
+
 </script>
+
 {% endblock %}
